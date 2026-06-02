@@ -9,40 +9,57 @@ public class ProvjeraPostojanja {
         System.out.println(putanjaHome);
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("Unesite putanju do originalne datoteke: ");
-        String putanja = sc.nextLine();
-        System.out.println("Unesite naziv te datoteke: ");
-        String naziv = sc.nextLine();
 
-        File file = new File("C:\\Users\\ivanm\\java\\Uvod\\TokoviZadatak\\dokument.txt");
+        File file = null;   // stavljeno pod globalni opseg koda
+        int odabir = 1;     // postavljeno zbog inicijalizacije (1)
 
-        if (putanja.equals(putanjaHome)) {
-            System.out.println("Putanja postoji!");
-            if (naziv.equals(file.getName())) {
-                System.out.println("Naziv postoji!");
+        while (odabir >= 1 && odabir <= 3) {
+            System.out.println("Unesite sljedeću operaciju: \n1 - Provjera postojanja\n2 - Kopiranje datoteke\n3- Brisanje datoteke");
+            odabir = sc.nextInt();
+            sc.nextLine();          // bitno da se ne događa preskakanje sljedećeg inputa!
+
+            if (odabir == 1) {
+                System.out.println("Unesite putanju do originalne datoteke: ");
+                String putanja = sc.nextLine();
+                System.out.println("Unesite naziv te datoteke: ");
+                String naziv = sc.nextLine();
+
+                file = new File("C:\\Users\\ivanm\\java\\Uvod\\TokoviZadatak\\dokument.txt");
+
+                if (putanja.equals(putanjaHome)) {
+                    System.out.println("Putanja postoji!");
+                    if (naziv.equals(file.getName())) {
+                        System.out.println("Naziv postoji!");
+                    } else {
+                        throw new FileNotFoundException("Naziv ne postoji!");
+                    }
+                } else {
+                    throw new RuntimeException("Putanja ne postoji!");
+                }
+            } else if (odabir == 2) {
+                try (FileInputStream fis = new FileInputStream(file);
+                     FileOutputStream fos = new FileOutputStream("izlazFOS.txt");) {
+                    int c;
+                    while ((c = fis.read()) != -1) {
+                        fos.write(c);
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (odabir == 3) {
+                File noviFile = new File("izlazFOS.txt");
+
+                if (noviFile.exists()) {
+                    System.out.println("Nova datoteke postoji!");
+                    break;
+                } else {
+                    System.out.println("Nova datoteke NE postoji!");
+                    break;
+                }
             } else {
-                throw new FileNotFoundException();
+                System.out.println("Operacija je završena!");
+                return;
             }
-        } else {
-            throw new RuntimeException("Putanja ne postoji!");
-        }
-
-        try(FileInputStream fis = new FileInputStream(file);
-            FileOutputStream fos = new FileOutputStream("izlazFOS.txt");) {
-            int c;
-            while ((c = fis.read()) != -1) {
-                fos.write(c);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        File noviFile = new File("izlazFOS.txt");
-
-        if (noviFile.exists()) {
-            System.out.println("Nova datoteke postoji!");
-        } else {
-            System.out.println("Nova datoteke NE postoji!");
         }
     }
 }
