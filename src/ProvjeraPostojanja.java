@@ -31,10 +31,10 @@ public class ProvjeraPostojanja {
                     if (naziv.equals(file.getName())) {
                         System.out.println("Naziv postoji!");
                     } else {
-                        throw new FileNotFoundException("Naziv ne postoji!");
+                        System.err.println("Naziv ne postoji!");
                     }
                 } else {
-                    throw new RuntimeException("Putanja ne postoji!");
+                    System.err.println("Putanja ne postoji!");
                 }
             } else if (odabir == 2) {
                 try (FileInputStream fis = new FileInputStream(file);
@@ -44,21 +44,20 @@ public class ProvjeraPostojanja {
                         fos.write(c);
                     }
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    throw new RuntimeException(e.getMessage());
                 }
             } else if (odabir == 3) {
                 File noviFile = new File("izlazFOS.txt");
 
                 if (noviFile.exists()) {
-                    System.out.println("Nova datoteke postoji!");
-                    break;
+                    System.out.println("Nova datoteka postoji - brišem!");
+                    noviFile.delete();
                 } else {
-                    System.out.println("Nova datoteke NE postoji!");
-                    break;
+                    System.out.println("Nova datoteka NE postoji!");
                 }
             } else {
                 System.out.println("Operacija je završena!");
-                return;
+                break;
             }
         }
     }
