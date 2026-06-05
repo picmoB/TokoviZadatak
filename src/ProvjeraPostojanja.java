@@ -14,7 +14,7 @@ public class ProvjeraPostojanja {
         int odabir = 1;     // postavljeno zbog inicijalizacije (1)
 
         while (odabir >= 1 && odabir <= 3) {
-            System.out.println("Unesite sljedeću operaciju: \n1 - Provjera postojanja\n2 - Kopiranje datoteke\n3- Brisanje datoteke");
+            System.out.println("Unesite sljedeću operaciju: \n1 - Provjera postojanja\n2 - Kopiranje datoteke\n3 - Brisanje datoteke");
             odabir = sc.nextInt();
             sc.nextLine();          // bitno da se ne događa preskakanje sljedećeg inputa!
 
